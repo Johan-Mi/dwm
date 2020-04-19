@@ -4,7 +4,7 @@
 
 /* appearance */
 static const unsigned int borderpx	= 2;		/* border pixel of windows */
-static const unsigned int gappx		= 3;		/* gaps between windows */
+static const unsigned int gappx		= 1;		/* gaps between windows */
 static const unsigned int snap		= 32;		/* snap pixel */
 static const unsigned int systraypinning = 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;	/* systray spacing */
@@ -22,13 +22,13 @@ static const unsigned long col_green	= 0x55cc00;
 static const char *colors[][3]			= {
 	/*						fg			bg		   border	*/
 	[SchemeNorm]		= { col_fg,	col_bg, col_bg },
-	[SchemeSel]			= { col_bg,	col_fg,	col_fg  },
+	[SchemeSel]			= { col_bg,	col_fg,	col_fg	},
 	[SchemeStatus]		= { col_fg,	col_gray_mid, "#000000" }, // Statusbar right
 	[SchemeTagsSel]		= { col_fg,	col_gray_mid, "#000000" }, // Tagbar left selected
 	[SchemeTagsNorm]	= { "#aaaaaa",	col_bg, "#000000" }, // Tagbar left unselected
 	[SchemeInfoSel]		= { col_fg,	col_bg, "#000000" }, // infobar middle	selected
-	[SchemeInfoNorm]	= { col_fg,	col_bg, "#000000" }, // infobar middle  unselected
-	[SchemeLayout]		= { col_fg,	col_gray_mid, "#000000" }, 
+	[SchemeInfoNorm]	= { col_fg,	col_bg, "#000000" }, // infobar middle	unselected
+	[SchemeLayout]		= { col_fg,	col_gray_mid, "#000000" },
 };
 
 /* tagging */
@@ -73,59 +73,59 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
-	/* modifier						key		   function		   argument */
-	{ MODKEY,						XK_p,	   spawn,			{.v = dmenucmd } },
-	{ MODKEY,						XK_Return, spawn,			{.v = termcmd } },
-	{ MODKEY,						XK_i,	   spawn,			SHCMD("$BROWSER") },
-	{ MODKEY,						XK_y,	   spawn,			SHCMD("brave youtube.com") },
-	{ MODKEY,						XK_m,	   spawn,			SHCMD("thunderbird") },
-	{ Mod1Mask|ControlMask,			XK_l,	   spawn,			SHCMD("slock") },
-	{ 0,			   XF86XK_MonBrightnessUp, spawn,			SHCMD("brightnessctl set 5%+") },
-	{ 0,			 XF86XK_MonBrightnessDown, spawn,			SHCMD("brightnessctl set 5%-") },
-	{ MODKEY|ControlMask,			XK_e,	   spawn,			SHCMD("dmenuunicode") },
-	{ MODKEY|ControlMask,			XK_r,	   spawn,			SHCMD("subreddits") },
-	{ MODKEY|ControlMask,			XK_p,	   spawn,			SHCMD("scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'") },
-	{ ControlMask,			XF86XK_AudioMute,  spawn,			SHCMD("playerctl play-pause") },
-	{ ControlMask,	  XF86XK_AudioLowerVolume, spawn,			SHCMD("playerctl previous") },
-	{ ControlMask,	  XF86XK_AudioRaiseVolume, spawn,			SHCMD("playerctl next") },
-	{ MODKEY,						XK_b,	   togglebar,		{0} },
-	{ MODKEY|ControlMask,			XK_j,	   rotatestack,		{.i = +1 } },
-	{ MODKEY|ControlMask,			XK_k,	   rotatestack,		{.i = -1 } },
-	{ MODKEY,						XK_j,	   focusstack,		{.i = +1 } },
-	{ MODKEY,						XK_k,	   focusstack,		{.i = -1 } },
-	{ MODKEY|ShiftMask,				XK_j,	   pushdown,		{0} },
-	{ MODKEY|ShiftMask,				XK_k,	   pushup,			{0} },
-	{ MODKEY|ShiftMask,				XK_d,	   incnmaster,		{.i = +1 } },
-	{ MODKEY,						XK_d,	   incnmaster,		{.i = -1 } },
-	{ MODKEY,						XK_h,	   setmfact,		{.f = -0.05} },
-	{ MODKEY,						XK_l,	   setmfact,		{.f = +0.05} },
-	{ MODKEY|ShiftMask,				XK_Return, zoom,			{0} },
-	{ MODKEY,						XK_Tab,    view,			{0} },
-	{ MODKEY|ShiftMask,				XK_c,	   killclient,		{0} },
-	{ MODKEY,						XK_t,	   setlayout,		{.v = &layouts[0]} },
-	{ MODKEY,						XK_f,	   setlayout,		{.v = &layouts[1]} },
-	{ MODKEY|ShiftMask,				XK_f,	   fullscreen,		{.v = &layouts[2]} },
-	{ MODKEY|ShiftMask,				XK_m,	   setlayout,		{.v = &layouts[2]} },
-	{ MODKEY|ControlMask,			XK_comma,  cyclelayout,		{.i = -1 } },
-	{ MODKEY|ControlMask,			XK_period, cyclelayout,		{.i = +1 } },
-	{ MODKEY,						XK_space,  setlayout,		{0} },
-	{ MODKEY|ShiftMask,				XK_space,  togglefloating,	{0} },
-	{ MODKEY,						XK_0,	   view,			{.ui = ~0 } },
-	{ MODKEY|ShiftMask,				XK_0,	   tag,				{.ui = ~0 } },
-	{ MODKEY,						XK_comma,  focusmon,		{.i = -1 } },
-	{ MODKEY,						XK_period, focusmon,		{.i = +1 } },
-	{ MODKEY|ShiftMask,				XK_comma,  tagmon,			{.i = -1 } },
-	{ MODKEY|ShiftMask,				XK_period, tagmon,			{.i = +1 } },
-	TAGKEYS(						XK_1,						0)
-	TAGKEYS(						XK_2,						1)
-	TAGKEYS(						XK_3,						2)
-	TAGKEYS(						XK_4,						3)
-	TAGKEYS(						XK_5,						4)
-	TAGKEYS(						XK_6,						5)
-	TAGKEYS(						XK_7,						6)
-	TAGKEYS(						XK_8,						7)
-	TAGKEYS(						XK_9,						8)
-	{ MODKEY|ShiftMask,				XK_q,	   quit,			{0} },
+	/* modifier				key			function		   argument */
+	{ MODKEY,				XK_p,		spawn,			{.v = dmenucmd } },
+	{ MODKEY,				XK_Return,	spawn,			{.v = termcmd } },
+	{ MODKEY,				XK_i,		spawn,			SHCMD("$BROWSER") },
+	{ MODKEY,				XK_y,		spawn,			SHCMD("brave youtube.com") },
+	{ MODKEY,				XK_m,		spawn,			SHCMD("thunderbird") },
+	{ Mod1Mask|ControlMask,	XK_l,		spawn,			SHCMD("slock") },
+	{ 0,	XF86XK_MonBrightnessUp,		spawn,			SHCMD("brightnessctl set 5%+") },
+	{ 0,	XF86XK_MonBrightnessDown,	spawn,			SHCMD("brightnessctl set 5%-") },
+	{ MODKEY|ControlMask,	XK_e,		spawn,			SHCMD("dmenuunicode") },
+	{ MODKEY|ControlMask,	XK_r,		spawn,			SHCMD("subreddits") },
+	{ MODKEY|ControlMask,	XK_p,		spawn,			SHCMD("scrot '%Y-%m-%d-%H-%M_$wx$h.png' -e 'mv $f ~/Pictures/'") },
+	{ ControlMask,	XF86XK_AudioMute,	spawn,			SHCMD("playerctl play-pause") },
+	{ ControlMask,	XF86XK_AudioLowerVolume, spawn,		SHCMD("playerctl previous") },
+	{ ControlMask,	XF86XK_AudioRaiseVolume, spawn,		SHCMD("playerctl next") },
+	{ MODKEY,				XK_b,		togglebar,		{0} },
+	{ MODKEY|ControlMask,	XK_j,		rotatestack,	{.i = +1 } },
+	{ MODKEY|ControlMask,	XK_k,		rotatestack,	{.i = -1 } },
+	{ MODKEY,				XK_j,		focusstack,		{.i = +1 } },
+	{ MODKEY,				XK_k,		focusstack,		{.i = -1 } },
+	{ MODKEY|ShiftMask,		XK_j,		pushdown,		{0} },
+	{ MODKEY|ShiftMask,		XK_k,		pushup,			{0} },
+	{ MODKEY|ShiftMask,		XK_d,		incnmaster,		{.i = +1 } },
+	{ MODKEY,				XK_d,		incnmaster,		{.i = -1 } },
+	{ MODKEY,				XK_h,		setmfact,		{.f = -0.05} },
+	{ MODKEY,				XK_l,		setmfact,		{.f = +0.05} },
+	{ MODKEY|ShiftMask,		XK_Return,	zoom,			{0} },
+	{ MODKEY,				XK_Tab,		view,			{0} },
+	{ MODKEY|ShiftMask,		XK_c,		killclient,		{0} },
+	//{ MODKEY,				XK_t,		setlayout,		{.v = &layouts[0]} },
+	//{ MODKEY,				XK_f,		setlayout,		{.v = &layouts[1]} },
+	{ MODKEY,				XK_f,		fullscreen,		{0} },
+	//{ MODKEY|ShiftMask,		XK_m,		setlayout,		{.v = &layouts[2]} },
+	{ MODKEY|ControlMask,	XK_comma,	cyclelayout,	{.i = -1 } },
+	{ MODKEY|ControlMask,	XK_period,	cyclelayout,	{.i = +1 } },
+	{ MODKEY,				XK_space,	setlayout,		{0} },
+	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
+	{ MODKEY,				XK_0,		view,			{.ui = ~0 } },
+	{ MODKEY|ShiftMask,		XK_0,		tag,			{.ui = ~0 } },
+	{ MODKEY,				XK_comma,	focusmon,		{.i = -1 } },
+	{ MODKEY,				XK_period,	focusmon,		{.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_comma,	tagmon,			{.i = -1 } },
+	{ MODKEY|ShiftMask,		XK_period,	tagmon,			{.i = +1 } },
+	TAGKEYS(				XK_1,						0)
+	TAGKEYS(				XK_2,						1)
+	TAGKEYS(				XK_3,						2)
+	TAGKEYS(				XK_4,						3)
+	TAGKEYS(				XK_5,						4)
+	TAGKEYS(				XK_6,						5)
+	TAGKEYS(				XK_7,						6)
+	TAGKEYS(				XK_8,						7)
+	TAGKEYS(				XK_9,						8)
+	{ MODKEY|ShiftMask,		XK_q,	   quit,			{0} },
 };
 
 /* button definitions */
