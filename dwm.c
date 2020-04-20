@@ -829,7 +829,7 @@ drawbar(Monitor *m)
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
 
-	drw_setscheme(drw, scheme[SchemeTagsSel]);
+	drw_setscheme(drw, scheme[SchemeNorm]);
 	drw_rect(drw, 0, bh - 2, m->ww, 2, 0, 1);
 
 	if(showsystray && m == systraytomon(m))
@@ -2427,7 +2427,7 @@ updatesystray(void)
 		/* init systray */
 		if (!(systray = (Systray *)calloc(1, sizeof(Systray))))
 			die("fatal: could not malloc() %u bytes\n", sizeof(Systray));
-		systray->win = XCreateSimpleWindow(dpy, root, x, m->by, w, bh - 2, 0, 0, scheme[SchemeSel][ColBg].pixel);
+		systray->win = XCreateSimpleWindow(dpy, root, x, m->by, w, bh, 0, 0, scheme[SchemeSel][ColBg].pixel);
 		wa.event_mask        = ButtonPressMask | ExposureMask;
 		wa.override_redirect = True;
 		wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
