@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx	= 2;		/* border pixel of windows */
+static const unsigned int borderpx	= 1;		/* border pixel of windows */
 static const unsigned int gappx		= 1;		/* gaps between windows */
 static const unsigned int snap		= 32;		/* snap pixel */
 static const unsigned int systraypinning = 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -88,6 +88,8 @@ static Key keys[] = {
 	{ ControlMask,	XF86XK_AudioMute,	spawn,			SHCMD("playerctl play-pause") },
 	{ ControlMask,	XF86XK_AudioLowerVolume, spawn,		SHCMD("playerctl previous") },
 	{ ControlMask,	XF86XK_AudioRaiseVolume, spawn,		SHCMD("playerctl next") },
+	{ 0,	XF86XK_AudioRaiseVolume,	spawn,			SHCMD("change-volume 2%+") },
+	{ 0,	XF86XK_AudioLowerVolume,	spawn,			SHCMD("change-volume 2%-") },
 	{ MODKEY,				XK_b,		togglebar,		{0} },
 	{ MODKEY|ControlMask,	XK_j,		rotatestack,	{.i = +1 } },
 	{ MODKEY|ControlMask,	XK_k,		rotatestack,	{.i = -1 } },
