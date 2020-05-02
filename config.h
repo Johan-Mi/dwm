@@ -10,7 +10,7 @@ static const unsigned int systraypinning = 0;	/* 0: sloppy systray follows selec
 static const unsigned int systrayspacing = 2;	/* systray spacing */
 static const int systraypinningfailfirst = 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray		= 1;	 /* 0 means no systray */
-static const int showbar			= 1;		/* 0 means no bar */
+static const int showbar			= 0;		/* 0 means no bar */
 static const int topbar				= 1;		/* 0 means bottom bar */
 static const char *fonts[]			= { "noto sans:size=11", "JoyPixels:size=10" };
 
@@ -76,12 +76,12 @@ static Key keys[] = {
 	/* modifier				key			function		   argument */
 	{ MODKEY,				XK_p,		spawn,			{.v = dmenucmd } },
 	{ MODKEY,				XK_Return,	spawn,			{.v = termcmd } },
-	{ MODKEY,				XK_i,		spawn,			SHCMD("$BROWSER") },
-	{ MODKEY,				XK_y,		spawn,			SHCMD("brave youtube.com") },
+	{ MODKEY,				XK_i,		spawn,			SHCMD("brave --new-window") },
+	{ MODKEY,				XK_y,		spawn,			SHCMD("brave --new-window youtube.com") },
 	{ MODKEY,				XK_m,		spawn,			SHCMD("thunderbird") },
 	{ Mod1Mask|ControlMask,	XK_l,		spawn,			SHCMD("slock") },
-	{ 0,	XF86XK_MonBrightnessUp,		spawn,			SHCMD("brightnessctl set 5%+") },
-	{ 0,	XF86XK_MonBrightnessDown,	spawn,			SHCMD("brightnessctl set 5%-") },
+	{ 0,	XF86XK_MonBrightnessUp,		spawn,			SHCMD("brightnessctl set 2%+") },
+	{ 0,	XF86XK_MonBrightnessDown,	spawn,			SHCMD("brightnessctl set 2%-") },
 	{ MODKEY|ControlMask,	XK_e,		spawn,			SHCMD("dmenuunicode") },
 	{ MODKEY|ControlMask,	XK_r,		spawn,			SHCMD("subreddits") },
 	{ MODKEY|ControlMask,	XK_p,		spawn,			SHCMD("scrot '%Y-%m-%d-%H-%M_$wx$h.png' -e 'mv $f ~/Pictures/'") },
