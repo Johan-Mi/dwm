@@ -17,8 +17,8 @@ static const char *fonts[]			= { "noto sans:size=11", "JoyPixels:size=10" };
 static const char col_bg[]				= "#0c0c0c";
 static const char col_fg[]				= "#eeeeee";
 static const char col_gray_mid[]		= "#2a2a2a";
-static const unsigned long col_cyan		= 0x01a0e4;
-static const unsigned long col_green	= 0x55cc00;
+static const unsigned long col_cyan		= 0x61afef;
+static const unsigned long col_green	= 0x98c379;
 static const char *colors[][3]			= {
 	/*						fg			bg		   border	*/
 	[SchemeNorm]		= { col_fg,	col_bg, col_bg },
@@ -44,7 +44,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact	 = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact	 = 0.5635; /* factor of master area size [0.05..0.95] */
 static const int nmaster	 = 1;	 /* number of clients in master area */
 static const int resizehints = 0;	 /* 1 means respect size hints in tiled resizals */
 
@@ -99,8 +99,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_k,		pushup,			{0} },
 	{ MODKEY|ShiftMask,		XK_d,		incnmaster,		{.i = +1 } },
 	{ MODKEY,				XK_d,		incnmaster,		{.i = -1 } },
-	{ MODKEY,				XK_h,		setmfact,		{.f = -0.05} },
-	{ MODKEY,				XK_l,		setmfact,		{.f = +0.05} },
+	{ MODKEY,				XK_h,		setmfact,		{.f = -0.0125} },
+	{ MODKEY,				XK_l,		setmfact,		{.f = +0.0125} },
 	{ MODKEY|ShiftMask,		XK_Return,	zoom,			{0} },
 	{ MODKEY,				XK_Tab,		view,			{0} },
 	{ MODKEY|ShiftMask,		XK_c,		killclient,		{0} },
@@ -128,6 +128,7 @@ static Key keys[] = {
 	TAGKEYS(				XK_8,						7)
 	TAGKEYS(				XK_9,						8)
 	{ MODKEY|ShiftMask,		XK_q,	   quit,			{0} },
+	{ MODKEY|ControlMask|ShiftMask,	XK_q,	quit,		{1} },
 };
 
 /* button definitions */
