@@ -832,9 +832,6 @@ drawbar(Monitor *m)
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
-	drw_rect(drw, 0, bh - 2, m->ww, 2, 0, 1);
-
 	if(showsystray && m == systraytomon(m))
 		stw = getsystraywidth();
 
@@ -842,10 +839,8 @@ drawbar(Monitor *m)
 	if (m == selmon) { /* status is only drawn on selected monitor */
 		drw_setscheme(drw, scheme[SchemeStatus]);
 		sw = TEXTW(stext) - lrpad / 2 + 2; /* 2px right padding */
-		drw_text(drw, m->ww - sw - stw, 0, sw, bh - 2, lrpad / 2 - 2, stext, 0);
+		drw_text(drw, m->ww - sw - stw, 0, sw, bh, lrpad / 2, stext, 0);
 
-		XSetForeground(drw->dpy, drw->gc, col_cyan);
-		XFillRectangle(drw->dpy, drw->drawable, drw->gc, m->ww - sw - stw, bh - 2, sw, 2);
 	}
 
 	resizebarwin(m);
@@ -861,37 +856,32 @@ drawbar(Monitor *m)
 		continue;
 
 		w = TEXTW(tags[i]) - lrpad / 2;
-		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeTagsSel : SchemeTagsNorm]);
-		drw_text(drw, x, 0, w, bh - 2, lrpad / 4, tags[i], urg & 1 << i);
+		drw_setscheme(drw, scheme[SchemeTagsNorm]);
+		drw_text(drw, x, 0, w, bh, lrpad / 4, tags[i], urg & 1 << i);
 		if (m->tagset[m->seltags] & 1 << i) {
+			drw_rect(drw, x, 0, w, bh, 0, 0);
 			drw_setscheme(drw, scheme[SchemeTagsNorm]);
-			/*drw_rect(drw, x, bh - 3, w, bh, 1, 0);*/
-			XSetForeground(drw->dpy, drw->gc, col_cyan);
-			XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, bh - 2, w, 2);
 		}
 		x += w;
 	}
 
 	drw_setscheme(drw, scheme[SchemeTagsNorm]);
-	drw_rect(drw, x, 0, 4, bh - 2, 1, 1);
+	drw_rect(drw, x, 0, 4, bh, 1, 1);
 	x += 4;
 
 	w = blw = TEXTW(m->ltsymbol) - 11;
 	drw_setscheme(drw, scheme[SchemeLayout]);
-	x = drw_text(drw, x, 0, w, bh - 2, lrpad / 4, m->ltsymbol, 0);
-
-	XSetForeground(drw->dpy, drw->gc, col_green);
-	XFillRectangle(drw->dpy, drw->drawable, drw->gc, x - w, bh - 2, w, 2);
+	x = drw_text(drw, x, 0, w, bh, lrpad / 4, m->ltsymbol, 0);
 
 	if ((w = m->ww - sw - stw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeInfoSel : SchemeInfoNorm]);
-			drw_text(drw, x, 0, w, bh - 2, lrpad / 2, m->sel->name, 0);
+			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
 		} else {
 			drw_setscheme(drw, scheme[SchemeInfoNorm]);
-			drw_rect(drw, x, 0, w, bh - 2, 1, 1);
+			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
 	}
 
@@ -1527,8 +1517,8 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	if (c->isfloating || selmon->lt[selmon->sellt]->arrange == NULL) {
 		gapincr = gapoffset = 0;
 	} else {
-		/* Remove border and gap if layout is monocle or only one client */
-		if (selmon->lt[selmon->sellt]->arrange == monocle /*|| n == 1*/) {
+		/* Remove border and gap if layout is monocle */
+		if (selmon->lt[selmon->sellt]->arrange == monocle) {
 			gapoffset = 0;
 			gapincr = -2 * borderpx;
 			wc.border_width = 0;
@@ -1688,11 +1678,7 @@ run(void)
 
 void
 runAutostart(void) {
-	/*system("cd ~/.config/dwm; ./autostart_blocking.sh");*/
-	/*system("cd ~/.config/dwm; ./autostart.sh &");*/
 	system("dwmblocks &");
-	/*system("nm-applet &");*/
-	/*system("volumeicon &");*/
 }
 
 void
@@ -1826,15 +1812,6 @@ Layout *last_layout;
 void
 fullscreen(const Arg *arg)
 {
-	/*
-	if (selmon->showbar) {
-		for(last_layout = (Layout *)layouts; last_layout != selmon->lt[selmon->sellt]; last_layout++);
-		setlayout(&((Arg) { .v = &layouts[2] }));
-	} else {
-		setlayout(&((Arg) { .v = last_layout }));
-	}
-	togglebar(arg);
-	*/
 	if(selmon->sel)
 		setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
 }

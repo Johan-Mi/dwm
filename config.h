@@ -4,31 +4,29 @@
 
 /* appearance */
 static const unsigned int borderpx	= 1;		/* border pixel of windows */
-static const unsigned int gappx		= 1;		/* gaps between windows */
+static const unsigned int gappx		= 0;		/* gaps between windows */
 static const unsigned int snap		= 32;		/* snap pixel */
 static const unsigned int systraypinning = 0;	/* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;	/* systray spacing */
 static const int systraypinningfailfirst = 1;	/* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray		= 1;	 /* 0 means no systray */
 static const int showbar			= 0;		/* 0 means no bar */
-static const int topbar				= 1;		/* 0 means bottom bar */
+static const int topbar				= 0;		/* 0 means bottom bar */
 static const char *fonts[]			= { "noto sans:size=11", "JoyPixels:size=10" };
 
 static const char col_bg[]				= "#0c0c0c";
 static const char col_fg[]				= "#eeeeee";
 static const char col_gray_mid[]		= "#2a2a2a";
-static const unsigned long col_cyan		= 0x61afef;
-static const unsigned long col_green	= 0x98c379;
 static const char *colors[][3]			= {
 	/*						fg			bg		   border	*/
 	[SchemeNorm]		= { col_fg,	col_bg, col_bg },
 	[SchemeSel]			= { col_bg,	col_fg,	col_fg	},
-	[SchemeStatus]		= { col_fg,	col_gray_mid, "#000000" }, // Statusbar right
-	[SchemeTagsSel]		= { col_fg,	col_gray_mid, "#000000" }, // Tagbar left selected
+	[SchemeStatus]		= { col_fg,	col_bg, "#000000" }, // Statusbar right
+	[SchemeTagsSel]		= { col_fg,	col_bg, "#000000" }, // Tagbar left selected
 	[SchemeTagsNorm]	= { "#aaaaaa",	col_bg, "#000000" }, // Tagbar left unselected
 	[SchemeInfoSel]		= { col_fg,	col_bg, "#000000" }, // infobar middle	selected
 	[SchemeInfoNorm]	= { col_fg,	col_bg, "#000000" }, // infobar middle	unselected
-	[SchemeLayout]		= { col_fg,	col_gray_mid, "#000000" },
+	[SchemeLayout]		= { col_fg,	col_bg, "#000000" },
 };
 
 /* tagging */
@@ -50,8 +48,8 @@ static const int resizehints = 0;	 /* 1 means respect size hints in tiled resiza
 
 static const Layout layouts[] = {
 	/* symbol	  arrange function */
-	{ "[]=",	  tile },	 /* first entry is default */
-	{ "><>",	  NULL },	 /* no layout function means floating behavior */
+	{ "🮉🮁",	  tile },	 /* first entry is default */
+	{ "🮥🮮",	  NULL },	 /* no layout function means floating behavior */
 	{ "[M]",	  monocle },
 	{ NULL,		  NULL },
 };
@@ -76,12 +74,12 @@ static Key keys[] = {
 	/* modifier				key			function		   argument */
 	{ MODKEY,				XK_p,		spawn,			{.v = dmenucmd } },
 	{ MODKEY,				XK_Return,	spawn,			{.v = termcmd } },
-	{ MODKEY,				XK_i,		spawn,			SHCMD("brave --new-window") },
-	{ MODKEY,				XK_y,		spawn,			SHCMD("brave --new-window youtube.com") },
-	{ MODKEY,				XK_m,		spawn,			SHCMD("thunderbird") },
-	{ Mod1Mask|ControlMask,	XK_l,		spawn,			SHCMD("slock") },
-	{ 0,	XF86XK_MonBrightnessUp,		spawn,			SHCMD("brightnessctl set 2%+") },
-	{ 0,	XF86XK_MonBrightnessDown,	spawn,			SHCMD("brightnessctl set 2%-") },
+	{ MODKEY,				XK_i,		spawn,			{.v = (const char*[]){"/usr/lib/brave-bin/brave", "--new-window", NULL} } },
+	{ MODKEY,				XK_y,		spawn,			{.v = (const char*[]){"/usr/lib/brave-bin/brave", "--new-window", "youtube.com", NULL} } },
+	{ MODKEY,				XK_m,		spawn,			{.v = (const char*[]){"thunderbird", NULL} } },
+	{ Mod1Mask|ControlMask,	XK_l,		spawn,			{.v = (const char*[]){"slock", NULL} } },
+	{ 0,	XF86XK_MonBrightnessUp,		spawn,			{.v = (const char*[]){"brightnessctl", "set", "2%+", NULL} } },
+	{ 0,	XF86XK_MonBrightnessDown,	spawn,			{.v = (const char*[]){"brightnessctl", "set", "2%-", NULL} } },
 	{ MODKEY|ControlMask,	XK_e,		spawn,			SHCMD("dmenuunicode") },
 	{ MODKEY|ControlMask,	XK_r,		spawn,			SHCMD("subreddits") },
 	{ MODKEY|ControlMask,	XK_p,		spawn,			SHCMD("scrot '%Y-%m-%d-%H-%M_$wx$h.png' -e 'mv $f ~/Pictures/'") },
@@ -104,13 +102,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Return,	zoom,			{0} },
 	{ MODKEY,				XK_Tab,		view,			{0} },
 	{ MODKEY|ShiftMask,		XK_c,		killclient,		{0} },
-	//{ MODKEY,				XK_t,		setlayout,		{.v = &layouts[0]} },
-	//{ MODKEY,				XK_f,		setlayout,		{.v = &layouts[1]} },
 	{ MODKEY,				XK_f,		fullscreen,		{0} },
-	//{ MODKEY|ShiftMask,		XK_m,		setlayout,		{.v = &layouts[2]} },
 	{ MODKEY|ControlMask,	XK_comma,	cyclelayout,	{.i = -1 } },
 	{ MODKEY|ControlMask,	XK_period,	cyclelayout,	{.i = +1 } },
-	//{ MODKEY,				XK_space,	setlayout,		{0} },
 	{ MODKEY,				XK_space,	togglefloating,	{0} },
 	{ MODKEY,				XK_0,		view,			{.ui = ~0 } },
 	{ MODKEY|ShiftMask,		XK_0,		tag,			{.ui = ~0 } },
