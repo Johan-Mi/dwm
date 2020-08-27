@@ -941,7 +941,7 @@ drawbar(Monitor *m)
 		drw_setscheme(drw, scheme[SchemeTagsNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 4, tags[i], urg & 1 << i);
 		if (m->tagset[m->seltags] & 1 << i) {
-			drw_rect(drw, x, 0, w, bh, 0, 0);
+			drw_rect(drw, x, bh - 1, w, 1, 0, 0);
 			drw_setscheme(drw, scheme[SchemeTagsNorm]);
 		}
 		x += w;

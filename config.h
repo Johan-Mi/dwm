@@ -4,7 +4,7 @@
 
 /* appearance */
 static const unsigned int borderpx = 1;
-static const unsigned int gappx = 0;
+static const unsigned int gappx = 4;
 static const unsigned int snap = 16; /* snap pixel */
 static const int swallowfloating = 0; /* 1 means swallow floating */
 static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -41,7 +41,7 @@ static const Rule rules[] = {
 	{ NULL, "Thunderbird", NULL,           1 << 7,    0,          0,           0,        -1 },
 	{ NULL,     "Discord", NULL,           1 << 8,    0,          0,           0,        -1 },
 	{ "st",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
+	{ NULL,      NULL,     "Event Tester", 0,         1,          0,           1,        -1 },
 };
 
 /* layout(s) */
@@ -61,52 +61,49 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,						KEY,  view,			  {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,			KEY,  toggleview,	  {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,				KEY,  tag,			  {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,  toggletag,	  {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod1Mask,				KEY,  viewtag,		  {.ui = 1 << TAG} },
+	{ MODKEY,						KEY,	view,		{.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,			KEY,	toggleview,	{.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,				KEY,	tag,		{.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask|ShiftMask, KEY,	toggletag,	{.ui = 1 << TAG} }, \
+	{ MODKEY|Mod1Mask,				KEY,	viewtag,	{.ui = 1 << TAG} },
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[] = { "st", NULL };
 
+#define CMD(X) {.v = (const char*[]){X}}
+
 static Key keys[] = {
 	/* modifier				key			function		   argument */
 	{ MODKEY,				XK_p,		spawn,			{.v = dmenucmd } },
 	{ MODKEY,				XK_Return,	spawn,			{.v = termcmd } },
-	{ MODKEY,				XK_i,		spawn,			{.v = (const char*[]){"/usr/lib/brave-bin/brave", "--new-window", NULL} } },
-	{ MODKEY,				XK_y,		spawn,			{.v = (const char*[]){"/usr/lib/brave-bin/brave", "--new-window", "youtube.com", NULL} } },
-	{ MODKEY|ControlMask,	XK_y,		spawn,			{.v = (const char*[]){"st", "-e", "python", NULL} } },
-	{ MODKEY,				XK_m,		spawn,			{.v = (const char*[]){"thunderbird", NULL} } },
-	{ MODKEY|ControlMask,	XK_d,		spawn,			{.v = (const char*[]){"discord", NULL} } },
-	{ Mod1Mask|ControlMask,	XK_l,		spawn,			{.v = (const char*[]){"slock", NULL} } },
-	{ MODKEY,				XK_e,		spawn,			{.v = (const char*[]){"emacs", NULL} } },
-	{ 0,	XF86XK_MonBrightnessUp,		spawn,			{.v = (const char*[]){"brightnessctl", "set", "2%+", NULL} } },
-	{ 0,	XF86XK_MonBrightnessDown,	spawn,			{.v = (const char*[]){"brightnessctl", "set", "2%-", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_s,		spawn,			{.v = (const char*[]){"brightnessctl", "set", "1%+", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_a,		spawn,			{.v = (const char*[]){"brightnessctl", "set", "1%-", NULL} } },
-	{ MODKEY|ControlMask,	XK_e,		spawn,			{.v = (const char*[]){"/home/johanmi/.local/bin/dmenuunicode", NULL} } },
-	{ MODKEY|ControlMask,	XK_r,		spawn,			{.v = (const char*[]){"/home/johanmi/.local/bin/subreddits", NULL} } },
-	{ MODKEY|ControlMask,	XK_p,		spawn,			{.v = (const char*[]){"scrot", "%Y-%m-%d-%H-%M_$wx$h.png", "-e", "mv $f ~/Pictures/", NULL} } },
-	{ ControlMask,	XF86XK_AudioMute,	spawn,			{.v = (const char*[]){"playerctl", "play-pause", NULL} } },
-	{ ControlMask,	XF86XK_AudioLowerVolume, spawn,		{.v = (const char*[]){"playerctl", "previous", NULL} } },
-	{ ControlMask,	XF86XK_AudioRaiseVolume, spawn,		{.v = (const char*[]){"playerctl", "next", NULL} } },
-	{ 0,	XF86XK_AudioRaiseVolume,	spawn,			{.v = (const char*[]){"/home/johanmi/.local/bin/change-volume", "2%+", NULL} } },
-	{ 0,	XF86XK_AudioLowerVolume,	spawn,			{.v = (const char*[]){"/home/johanmi/.local/bin/change-volume", "2%-", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_w,		spawn,			{.v = (const char*[]){"/home/johanmi/.local/bin/change-volume", "1%+", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_q,		spawn,			{.v = (const char*[]){"/home/johanmi/.local/bin/change-volume", "1%-", NULL} } },
-	{ MODKEY,				XK_x,		spawn,			{.v = (const char*[]){"xdotool", "mousemove", "675", "760", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_h,		spawn,			{.v = (const char*[]){"xdotool", "mousemove_relative", "--", "-10", "0", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_l,		spawn,			{.v = (const char*[]){"xdotool", "mousemove_relative", "10", "0", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_k,		spawn,			{.v = (const char*[]){"xdotool", "mousemove_relative", "--", "0", "-10", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_j,		spawn,			{.v = (const char*[]){"xdotool", "mousemove_relative", "0", "10", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_u,		spawn,			{.v = (const char*[]){"xdotool", "click", "--clearmodifiers", "1", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_i,		spawn,			{.v = (const char*[]){"xdotool", "click", "--clearmodifiers", "3", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_o,		spawn,			{.v = (const char*[]){"xdotool", "click", "--clearmodifiers", "2", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_y,		spawn,			{.v = (const char*[]){"xdotool", "click", "--clearmodifiers", "5", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_p,		spawn,			{.v = (const char*[]){"xdotool", "click", "--clearmodifiers", "4", NULL} } },
+	{ MODKEY,				XK_i,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window", NULL) },
+	{ MODKEY,				XK_y,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window", "youtube.com", NULL) },
+	{ MODKEY|ControlMask,	XK_y,		spawn,			CMD("st", "-e", "python", NULL) },
+	{ MODKEY,				XK_m,		spawn,			CMD("thunderbird", NULL) },
+	{ Mod1Mask|ControlMask,	XK_l,		spawn,			CMD("slock", NULL) },
+	{ MODKEY,				XK_e,		spawn,			CMD("emacs", NULL) },
+	{ MODKEY|Mod1Mask,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+", NULL) },
+	{ MODKEY|Mod1Mask,		XK_a,		spawn,			CMD("brightnessctl", "set", "1%-", NULL) },
+	{ MODKEY|ControlMask,	XK_e,		spawn,			CMD("/home/johanmi/.local/bin/dmenuunicode", NULL) },
+	{ MODKEY|ControlMask,	XK_r,		spawn,			CMD("/home/johanmi/.local/bin/subreddits", NULL) },
+	{ MODKEY|ControlMask,	XK_p,		spawn,			CMD("scrot", "%Y-%m-%d-%H-%M_$wx$h.png", "-e", "mv $f ~/Pictures/", NULL) },
+	{ ControlMask,	XF86XK_AudioMute,	spawn,			CMD("playerctl", "play-pause", NULL) },
+	{ ControlMask,	XF86XK_AudioLowerVolume, spawn,		CMD("playerctl", "previous", NULL) },
+	{ ControlMask,	XF86XK_AudioRaiseVolume, spawn,		CMD("playerctl", "next", NULL) },
+	{ MODKEY|Mod1Mask,		XK_w,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%+", NULL) },
+	{ MODKEY|Mod1Mask,		XK_q,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%-", NULL) },
+	{ MODKEY,				XK_x,		spawn,			CMD("xdotool", "mousemove", "675", "757", NULL) },
+	{ MODKEY|Mod1Mask,		XK_h,		spawn,			CMD("xdotool", "mousemove_relative", "--", "-10", "0", NULL) },
+	{ MODKEY|Mod1Mask,		XK_l,		spawn,			CMD("xdotool", "mousemove_relative", "10", "0", NULL) },
+	{ MODKEY|Mod1Mask,		XK_k,		spawn,			CMD("xdotool", "mousemove_relative", "--", "0", "-10", NULL) },
+	{ MODKEY|Mod1Mask,		XK_j,		spawn,			CMD("xdotool", "mousemove_relative", "0", "10", NULL) },
+	{ MODKEY|Mod1Mask,		XK_u,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "1", NULL) },
+	{ MODKEY|Mod1Mask,		XK_i,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "3", NULL) },
+	{ MODKEY|Mod1Mask,		XK_o,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "2", NULL) },
+	{ MODKEY|Mod1Mask,		XK_y,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "5", NULL) },
+	{ MODKEY|Mod1Mask,		XK_p,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "4", NULL) },
 	{ MODKEY,				XK_b,		togglebar,		{0} },
 	{ MODKEY|ControlMask,	XK_j,		rotatestack,	{.i = +1 } },
 	{ MODKEY|ControlMask,	XK_k,		rotatestack,	{.i = -1 } },
@@ -143,6 +140,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_q,		quit,			{0} },
 	{ MODKEY|ControlMask|ShiftMask,	XK_q,	quit,		{1} },
 };
+
+#undef CMD
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
