@@ -72,7 +72,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[] = { "st", NULL };
 
-#define CMD(X) {.v = (const char*[]){X}}
+#define CMD(...) {.v = (const char*[]){__VA_ARGS__}}
 
 static Key keys[] = {
 	/* modifier				key			function		   argument */
