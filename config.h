@@ -20,7 +20,7 @@ static const char col_fg[] = "#bbc2cf";
 static const char *colors[][3] = {
 	/*						fg		bg		border */
 	[SchemeNorm]		= { col_fg, col_bg, col_bg },
-	[SchemeSel]			= { col_bg, col_fg, col_fg },
+	[SchemeSel]			= { col_bg, col_fg, "#777777" },
 	[SchemeStatus]		= { col_fg, col_bg, col_fg },
 	[SchemeTagsSel]		= { col_fg, col_bg, col_fg },
 	[SchemeTagsNorm]	= { col_fg, col_bg, col_fg },
@@ -37,11 +37,8 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ NULL, "Thunderbird", NULL,           1 << 7,    0,          0,           0,        -1 },
-	{ NULL,     "Discord", NULL,           1 << 8,    0,          0,           0,        -1 },
-	{ "st",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         1,          0,           1,        -1 },
+	/* class instance title tags mask isfloating isterminal noswallow monitor */
+	{ NULL,  NULL,    NULL, 0,        0,         0,         0,        -1 },
 };
 
 /* layout(s) */
@@ -72,38 +69,37 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[] = { "st", NULL };
 
-#define CMD(...) {.v = (const char*[]){__VA_ARGS__}}
+#define CMD(...) {.v = (const char*[]){__VA_ARGS__, NULL}}
 
 static Key keys[] = {
 	/* modifier				key			function		   argument */
 	{ MODKEY,				XK_p,		spawn,			{.v = dmenucmd } },
 	{ MODKEY,				XK_Return,	spawn,			{.v = termcmd } },
-	{ MODKEY,				XK_i,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window", NULL) },
-	{ MODKEY,				XK_y,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window", "youtube.com", NULL) },
-	{ MODKEY|ControlMask,	XK_y,		spawn,			CMD("st", "-e", "python", NULL) },
-	{ MODKEY,				XK_m,		spawn,			CMD("thunderbird", NULL) },
-	{ Mod1Mask|ControlMask,	XK_l,		spawn,			CMD("slock", NULL) },
-	{ MODKEY,				XK_e,		spawn,			CMD("emacs", NULL) },
-	{ MODKEY|Mod1Mask,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+", NULL) },
-	{ MODKEY|Mod1Mask,		XK_a,		spawn,			CMD("brightnessctl", "set", "1%-", NULL) },
-	{ MODKEY|ControlMask,	XK_e,		spawn,			CMD("/home/johanmi/.local/bin/dmenuunicode", NULL) },
-	{ MODKEY|ControlMask,	XK_r,		spawn,			CMD("/home/johanmi/.local/bin/subreddits", NULL) },
-	{ MODKEY|ControlMask,	XK_p,		spawn,			CMD("scrot", "%Y-%m-%d-%H-%M_$wx$h.png", "-e", "mv $f ~/Pictures/", NULL) },
-	{ ControlMask,	XF86XK_AudioMute,	spawn,			CMD("playerctl", "play-pause", NULL) },
-	{ ControlMask,	XF86XK_AudioLowerVolume, spawn,		CMD("playerctl", "previous", NULL) },
-	{ ControlMask,	XF86XK_AudioRaiseVolume, spawn,		CMD("playerctl", "next", NULL) },
-	{ MODKEY|Mod1Mask,		XK_w,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%+", NULL) },
-	{ MODKEY|Mod1Mask,		XK_q,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%-", NULL) },
-	{ MODKEY,				XK_x,		spawn,			CMD("xdotool", "mousemove", "675", "757", NULL) },
-	{ MODKEY|Mod1Mask,		XK_h,		spawn,			CMD("xdotool", "mousemove_relative", "--", "-10", "0", NULL) },
-	{ MODKEY|Mod1Mask,		XK_l,		spawn,			CMD("xdotool", "mousemove_relative", "10", "0", NULL) },
-	{ MODKEY|Mod1Mask,		XK_k,		spawn,			CMD("xdotool", "mousemove_relative", "--", "0", "-10", NULL) },
-	{ MODKEY|Mod1Mask,		XK_j,		spawn,			CMD("xdotool", "mousemove_relative", "0", "10", NULL) },
-	{ MODKEY|Mod1Mask,		XK_u,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "1", NULL) },
-	{ MODKEY|Mod1Mask,		XK_i,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "3", NULL) },
-	{ MODKEY|Mod1Mask,		XK_o,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "2", NULL) },
-	{ MODKEY|Mod1Mask,		XK_y,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "5", NULL) },
-	{ MODKEY|Mod1Mask,		XK_p,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "4", NULL) },
+	{ MODKEY,				XK_i,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window") },
+	{ MODKEY,				XK_y,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window", "youtube.com") },
+	{ MODKEY|ControlMask,	XK_y,		spawn,			CMD("st", "-e", "python") },
+	{ Mod1Mask|ControlMask,	XK_l,		spawn,			CMD("slock") },
+	{ MODKEY|Mod1Mask,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+") },
+	{ MODKEY|Mod1Mask,		XK_a,		spawn,			CMD("brightnessctl", "set", "1%-") },
+	{ MODKEY|ControlMask,	XK_e,		spawn,			CMD("/home/johanmi/.local/bin/dmenuunicode") },
+	{ MODKEY|ControlMask,	XK_r,		spawn,			CMD("/home/johanmi/.local/bin/subreddits") },
+	{ MODKEY|ControlMask,	XK_p,		spawn,			CMD("scrot", "%Y-%m-%d-%H-%M-%S_$wx$h.png", "-e", "mv $f ~/Pictures/") },
+	{ ControlMask,	XF86XK_AudioMute,	spawn,			CMD("playerctl", "play-pause") },
+	{ ControlMask,	XF86XK_AudioLowerVolume, spawn,		CMD("playerctl", "previous") },
+	{ ControlMask,	XF86XK_AudioRaiseVolume, spawn,		CMD("playerctl", "next") },
+	{ MODKEY|Mod1Mask,		XK_w,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%+") },
+	{ MODKEY|Mod1Mask,		XK_q,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%-") },
+	{ MODKEY,				XK_x,		spawn,			CMD("xdotool", "mousemove", "675", "757") },
+	{ MODKEY|Mod1Mask,		XK_h,		spawn,			CMD("xdotool", "mousemove_relative", "--", "-10", "0") },
+	{ MODKEY|Mod1Mask,		XK_l,		spawn,			CMD("xdotool", "mousemove_relative", "10", "0") },
+	{ MODKEY|Mod1Mask,		XK_k,		spawn,			CMD("xdotool", "mousemove_relative", "--", "0", "-10") },
+	{ MODKEY|Mod1Mask,		XK_j,		spawn,			CMD("xdotool", "mousemove_relative", "0", "10") },
+	{ MODKEY|Mod1Mask,		XK_u,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "1") },
+	{ MODKEY|Mod1Mask,		XK_i,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "3") },
+	{ MODKEY|Mod1Mask,		XK_o,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "2") },
+	{ MODKEY|Mod1Mask,		XK_y,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "5") },
+	{ MODKEY|Mod1Mask,		XK_p,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "4") },
+	{ ControlMask|Mod1Mask,	XK_Delete,	spawn,			CMD("mpv", "--fs", "/usr/local/etc/rickroll.mp4") },
 	{ MODKEY,				XK_b,		togglebar,		{0} },
 	{ MODKEY|ControlMask,	XK_j,		rotatestack,	{.i = +1 } },
 	{ MODKEY|ControlMask,	XK_k,		rotatestack,	{.i = -1 } },
