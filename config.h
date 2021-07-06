@@ -71,74 +71,82 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[] = { "st", NULL };
 
 #define CMD(...) {.v = (const char*[]){__VA_ARGS__, NULL}}
+#define S ShiftMask
+#define C ControlMask
+#define W MODKEY
+#define A Mod1Mask
 
 static Key keys[] = {
-	/* modifier				key			function		   argument */
-	{ MODKEY,				XK_p,		spawn,			{.v = dmenucmd } },
-	{ MODKEY,				XK_Return,	spawn,			{.v = termcmd } },
-	{ MODKEY,				XK_i,		spawn,			CMD("brave-bin", "--new-window") },
-	{ MODKEY,				XK_y,		spawn,			CMD("brave-bin", "--new-window", "youtube.com") },
-	{ MODKEY|ControlMask,	XK_y,		spawn,			CMD("st", "-e", "python") },
-	{ Mod1Mask|ControlMask,	XK_l,		spawn,			CMD("slock") },
-	{ MODKEY|Mod1Mask,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+") },
-	{ MODKEY|Mod1Mask,		XK_a,		spawn,			CMD("brightnessctl", "set", "1%-") },
-	{ MODKEY|ControlMask,	XK_e,		spawn,			CMD("/home/johanmi/.local/bin/dmenuunicode") },
-	{ MODKEY|ControlMask,	XK_r,		spawn,			CMD("/home/johanmi/.local/bin/subreddits") },
-	{ MODKEY|ControlMask,	XK_p,		spawn,			CMD("scrot", "%Y-%m-%d-%H-%M-%S_$wx$h.png", "-e", "mv $f ~/Pictures/") },
-	{ ControlMask,	XF86XK_AudioMute,	spawn,			CMD("playerctl", "play-pause") },
-	{ ControlMask,	XF86XK_AudioLowerVolume, spawn,		CMD("playerctl", "previous") },
-	{ ControlMask,	XF86XK_AudioRaiseVolume, spawn,		CMD("playerctl", "next") },
-	{ MODKEY|Mod1Mask,		XK_w,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%+") },
-	{ MODKEY|Mod1Mask,		XK_q,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%-") },
-	{ MODKEY,				XK_x,		spawn,			CMD("xdotool", "mousemove", "675", "757") },
-	{ MODKEY|Mod1Mask,		XK_h,		spawn,			CMD("xdotool", "mousemove_relative", "--", "-10", "0") },
-	{ MODKEY|Mod1Mask,		XK_l,		spawn,			CMD("xdotool", "mousemove_relative", "10", "0") },
-	{ MODKEY|Mod1Mask,		XK_k,		spawn,			CMD("xdotool", "mousemove_relative", "--", "0", "-10") },
-	{ MODKEY|Mod1Mask,		XK_j,		spawn,			CMD("xdotool", "mousemove_relative", "0", "10") },
-	{ MODKEY|Mod1Mask,		XK_u,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "1") },
-	{ MODKEY|Mod1Mask,		XK_i,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "3") },
-	{ MODKEY|Mod1Mask,		XK_o,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "2") },
-	{ MODKEY|Mod1Mask,		XK_y,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "5") },
-	{ MODKEY|Mod1Mask,		XK_p,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "4") },
-	{ ControlMask|Mod1Mask,	XK_Delete,	spawn,			CMD("mpv", "--fs", "/usr/local/etc/rickroll.mp4") },
-	{ MODKEY,				XK_b,		togglebar,		{0} },
-	{ MODKEY|ControlMask,	XK_j,		rotatestack,	{.i = +1 } },
-	{ MODKEY|ControlMask,	XK_k,		rotatestack,	{.i = -1 } },
-	{ MODKEY,				XK_j,		focusstack,		{.i = +1 } },
-	{ MODKEY,				XK_k,		focusstack,		{.i = -1 } },
-	{ MODKEY|ShiftMask,		XK_j,		pushdown,		{0} },
-	{ MODKEY|ShiftMask,		XK_k,		pushup,			{0} },
-	{ MODKEY|ShiftMask,		XK_d,		incnmaster,		{.i = +1 } },
-	{ MODKEY,				XK_d,		incnmaster,		{.i = -1 } },
-	{ MODKEY,				XK_h,		setmfact,		{.f = -0.0125} },
-	{ MODKEY,				XK_l,		setmfact,		{.f = +0.0125} },
-	{ MODKEY|ShiftMask,		XK_Return,	zoom,			{0} },
-	{ MODKEY,				XK_Tab,		view,			{0} },
-	{ MODKEY|ShiftMask,		XK_c,		killclient,		{0} },
-	{ MODKEY,				XK_f,		fullscreen,		{0} },
-	{ MODKEY|ControlMask,	XK_comma,	cyclelayout,	{.i = -1 } },
-	{ MODKEY|ControlMask,	XK_period,	cyclelayout,	{.i = +1 } },
-	{ MODKEY,				XK_space,	togglefloating,	{0} },
-	{ MODKEY,				XK_0,		view,			{.ui = ~0 } },
-	{ MODKEY|ShiftMask,		XK_0,		tag,			{.ui = ~0 } },
-	{ MODKEY,				XK_comma,	focusmon,		{.i = -1 } },
-	{ MODKEY,				XK_period,	focusmon,		{.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_comma,	tagmon,			{.i = -1 } },
-	{ MODKEY|ShiftMask,		XK_period,	tagmon,			{.i = +1 } },
-	TAGKEYS(				XK_1,						0)
-	TAGKEYS(				XK_2,						1)
-	TAGKEYS(				XK_3,						2)
-	TAGKEYS(				XK_4,						3)
-	TAGKEYS(				XK_5,						4)
-	TAGKEYS(				XK_6,						5)
-	TAGKEYS(				XK_7,						6)
-	TAGKEYS(				XK_8,						7)
-	TAGKEYS(				XK_9,						8)
-	{ MODKEY|ShiftMask,		XK_q,		quit,			{0} },
-	{ MODKEY|ControlMask|ShiftMask,	XK_q,	quit,		{1} },
+	/* modifier	key			function		argument */
+	{ W,		XK_p,		spawn,			{.v = dmenucmd } },
+	{ W,		XK_Return,	spawn,			{.v = termcmd } },
+	{ W,		XK_i,		spawn,			CMD("brave-bin", "--new-window") },
+	{ W,		XK_y,		spawn,			CMD("brave-bin", "--new-window", "youtube.com") },
+	{ W|C,		XK_y,		spawn,			CMD("st", "-e", "python") },
+	{ A|C,		XK_l,		spawn,			CMD("slock") },
+	{ W|A,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+") },
+	{ W|A,		XK_a,		spawn,			CMD("brightnessctl", "set", "1%-") },
+	{ W|C,		XK_e,		spawn,			CMD("/home/johanmi/.local/bin/dmenuunicode") },
+	{ W|C,		XK_r,		spawn,			CMD("/home/johanmi/.local/bin/subreddits") },
+	{ W|C,		XK_p,		spawn,			CMD("scrot", "%Y-%m-%d-%H-%M-%S_$wx$h.png", "-e", "mv $f ~/Pictures/") },
+	{ C,XF86XK_AudioMute,	spawn,			CMD("playerctl", "play-pause") },
+	{ C,XF86XK_AudioLowerVolume, spawn,		CMD("playerctl", "previous") },
+	{ C,XF86XK_AudioRaiseVolume, spawn,		CMD("playerctl", "next") },
+	{ W|A,		XK_w,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%+") },
+	{ W|A,		XK_q,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%-") },
+	{ W,		XK_x,		spawn,			CMD("xdotool", "mousemove", "675", "757") },
+	{ W|A,		XK_h,		spawn,			CMD("xdotool", "mousemove_relative", "--", "-10", "0") },
+	{ W|A,		XK_l,		spawn,			CMD("xdotool", "mousemove_relative", "10", "0") },
+	{ W|A,		XK_k,		spawn,			CMD("xdotool", "mousemove_relative", "--", "0", "-10") },
+	{ W|A,		XK_j,		spawn,			CMD("xdotool", "mousemove_relative", "0", "10") },
+	{ W|A,		XK_u,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "1") },
+	{ W|A,		XK_i,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "3") },
+	{ W|A,		XK_o,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "2") },
+	{ W|A,		XK_y,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "5") },
+	{ W|A,		XK_p,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "4") },
+	{ C|A,		XK_Delete,	spawn,			CMD("mpv", "--fs", "/usr/local/etc/rickroll.mp4") },
+	{ W,		XK_b,		togglebar,		{0} },
+	{ W|C,		XK_j,		rotatestack,	{.i = +1 } },
+	{ W|C,		XK_k,		rotatestack,	{.i = -1 } },
+	{ W,		XK_j,		focusstack,		{.i = +1 } },
+	{ W,		XK_k,		focusstack,		{.i = -1 } },
+	{ W|S,		XK_j,		pushdown,		{0} },
+	{ W|S,		XK_k,		pushup,			{0} },
+	{ W|S,		XK_d,		incnmaster,		{.i = +1 } },
+	{ W,		XK_d,		incnmaster,		{.i = -1 } },
+	{ W,		XK_h,		setmfact,		{.f = -0.0125} },
+	{ W,		XK_l,		setmfact,		{.f = +0.0125} },
+	{ W|S,		XK_Return,	zoom,			{0} },
+	{ W,		XK_Tab,		view,			{0} },
+	{ W|S,		XK_c,		killclient,		{0} },
+	{ W,		XK_f,		fullscreen,		{0} },
+	{ W|C,		XK_comma,	cyclelayout,	{.i = -1 } },
+	{ W|C,		XK_period,	cyclelayout,	{.i = +1 } },
+	{ W,		XK_space,	togglefloating,	{0} },
+	{ W,		XK_0,		view,			{.ui = ~0 } },
+	{ W|S,		XK_0,		tag,			{.ui = ~0 } },
+	{ W,		XK_comma,	focusmon,		{.i = -1 } },
+	{ W,		XK_period,	focusmon,		{.i = +1 } },
+	{ W|S,		XK_comma,	tagmon,			{.i = -1 } },
+	{ W|S,		XK_period,	tagmon,			{.i = +1 } },
+	{ W|S,		XK_q,		quit,			{0} },
+	{ W|C|S,	XK_q,		quit,			{1} },
+	TAGKEYS(XK_1, 0)
+	TAGKEYS(XK_2, 1)
+	TAGKEYS(XK_3, 2)
+	TAGKEYS(XK_4, 3)
+	TAGKEYS(XK_5, 4)
+	TAGKEYS(XK_6, 5)
+	TAGKEYS(XK_7, 6)
+	TAGKEYS(XK_8, 7)
+	TAGKEYS(XK_9, 8)
 };
 
 #undef CMD
+#undef S
+#undef C
+#undef W
+#undef A
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
