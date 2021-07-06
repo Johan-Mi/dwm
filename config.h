@@ -76,8 +76,8 @@ static Key keys[] = {
 	/* modifier				key			function		   argument */
 	{ MODKEY,				XK_p,		spawn,			{.v = dmenucmd } },
 	{ MODKEY,				XK_Return,	spawn,			{.v = termcmd } },
-	{ MODKEY,				XK_i,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window") },
-	{ MODKEY,				XK_y,		spawn,			CMD("/usr/lib/brave-bin/brave", "--new-window", "youtube.com") },
+	{ MODKEY,				XK_i,		spawn,			CMD("brave-bin", "--new-window") },
+	{ MODKEY,				XK_y,		spawn,			CMD("brave-bin", "--new-window", "youtube.com") },
 	{ MODKEY|ControlMask,	XK_y,		spawn,			CMD("st", "-e", "python") },
 	{ Mod1Mask|ControlMask,	XK_l,		spawn,			CMD("slock") },
 	{ MODKEY|Mod1Mask,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+") },
