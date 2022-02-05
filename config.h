@@ -4,7 +4,7 @@
 
 /* appearance */
 static const unsigned int borderpx = 1;
-static const unsigned int gappx = 4;
+static const unsigned int gappx = 1;
 static const unsigned int snap = 16; /* snap pixel */
 static const unsigned int systraypinning = 0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;
@@ -80,14 +80,16 @@ static Key keys[] = {
 	{ W,		XK_p,		spawn,			{.v = dmenucmd } },
 	{ W,		XK_Return,	spawn,			{.v = termcmd } },
 	{ W,		XK_i,		spawn,			CMD("brave-bin", "--new-window") },
-	{ W,		XK_y,		spawn,			CMD("brave-bin", "--new-window", "youtube.com") },
+	{ W,		XK_y,		spawn,			CMD("brave-bin", "--new-window", "yewtu.be") },
+	{ W|S,		XK_e,		spawn,			CMD("emacs") },
 	{ W|C,		XK_y,		spawn,			CMD("st", "-e", "python") },
 	{ A|C,		XK_l,		spawn,			CMD("slock") },
 	{ W|A,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+") },
 	{ W|A,		XK_a,		spawn,			CMD("brightnessctl", "set", "1%-") },
+	{ W|S,		XK_o,		spawn,			CMD("brightnessctl", "set", "1") },
 	{ W|C,		XK_e,		spawn,			CMD("/home/johanmi/.local/bin/dmenuunicode") },
 	{ W|C,		XK_r,		spawn,			CMD("/home/johanmi/.local/bin/subreddits") },
-	{ W|C,		XK_p,		spawn,			CMD("scrot", "%Y-%m-%d-%H-%M-%S_$wx$h.png", "-e", "mv $f ~/Pictures/") },
+	{ W|C,		XK_p,		spawn,			CMD("scrot", "/home/johanmi/Pictures/%Y-%m-%d-%H-%M-%S_$wx$h.png") },
 	{ C,XF86XK_AudioMute,	spawn,			CMD("playerctl", "play-pause") },
 	{ C,XF86XK_AudioLowerVolume, spawn,		CMD("playerctl", "previous") },
 	{ C,XF86XK_AudioRaiseVolume, spawn,		CMD("playerctl", "next") },
@@ -104,6 +106,8 @@ static Key keys[] = {
 	{ W|A,		XK_y,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "5") },
 	{ W|A,		XK_p,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "4") },
 	{ C|A,		XK_Delete,	spawn,			CMD("mpv", "--fs", "/usr/local/etc/rickroll.mp4") },
+	{ W|S,		XK_s,		spawn,			CMD("sxiv", "/home/johanmi/Pictures/schema.png") },
+	{ W|C,      XK_space,   spawn,          CMD("dunstctl", "close") },
 	{ W,		XK_b,		togglebar,		{0} },
 	{ W|C,		XK_j,		rotatestack,	{.i = +1 } },
 	{ W|C,		XK_k,		rotatestack,	{.i = -1 } },
