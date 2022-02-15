@@ -493,7 +493,7 @@ buttonpress(XEvent *e)
 			/* do not reserve space for vacant tags */
 			if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
 				continue;
-			x += TEXTW(tags[i]);
+			x += TEXTW(tags[i]) - lrpad / 2;
 		} while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
