@@ -67,7 +67,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
-static const char *termcmd[] = { "st", NULL };
+static const char *termcmd[] = { "alacritty", NULL };
 
 #define CMD(...) {.v = (const char*[]){__VA_ARGS__, NULL}}
 #define S ShiftMask
@@ -82,7 +82,7 @@ static Key keys[] = {
 	{ W,		XK_i,		spawn,			CMD("brave-bin", "--new-window") },
 	{ W,		XK_y,		spawn,			CMD("brave-bin", "--new-window", "yewtu.be") },
 	{ W|S,		XK_e,		spawn,			CMD("emacs") },
-	{ W|C,		XK_y,		spawn,			CMD("st", "-e", "python") },
+	{ W|C,		XK_y,		spawn,			CMD("alacritty", "-e", "python") },
 	{ A|C,		XK_l,		spawn,			CMD("slock") },
 	{ W|A,		XK_s,		spawn,			CMD("brightnessctl", "set", "1%+") },
 	{ W|A,		XK_a,		spawn,			CMD("brightnessctl", "set", "1%-") },
