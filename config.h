@@ -95,7 +95,7 @@ static Key keys[] = {
 	{ C,XF86XK_AudioRaiseVolume, spawn,		CMD("playerctl", "next") },
 	{ W|A,		XK_w,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%+") },
 	{ W|A,		XK_q,		spawn,			CMD("/home/johanmi/.local/bin/change-volume", "1%-") },
-	{ W,		XK_x,		spawn,			CMD("xdotool", "mousemove", "675", "757") },
+	{ W,		XK_x,		spawn,			CMD("xdotool", "mousemove", "957", "1060") },
 	{ W|A,		XK_h,		spawn,			CMD("xdotool", "mousemove_relative", "--", "-10", "0") },
 	{ W|A,		XK_l,		spawn,			CMD("xdotool", "mousemove_relative", "10", "0") },
 	{ W|A,		XK_k,		spawn,			CMD("xdotool", "mousemove_relative", "--", "0", "-10") },
