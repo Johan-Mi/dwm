@@ -79,8 +79,8 @@ static Key keys[] = {
 	/* modifier	key			function		argument */
 	{ W,		XK_p,		spawn,			{.v = dmenucmd } },
 	{ W,		XK_Return,	spawn,			{.v = termcmd } },
-	{ W,		XK_i,		spawn,			CMD("brave-bin", "--new-window") },
-	{ W,		XK_y,		spawn,			CMD("brave-bin", "--new-window", "yewtu.be") },
+	{ W,		XK_i,		spawn,			CMD("brave", "--new-window") },
+	{ W,		XK_y,		spawn,			CMD("brave", "--new-window", "yewtu.be") },
 	{ W|S,		XK_e,		spawn,			CMD("emacs") },
 	{ W|C,		XK_y,		spawn,			CMD("alacritty", "-e", "python") },
 	{ A|C,		XK_l,		spawn,			CMD("slock") },
