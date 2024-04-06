@@ -106,7 +106,7 @@ static Key keys[] = {
 	{ W|A,		XK_y,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "5") },
 	{ W|A,		XK_p,		spawn,			CMD("xdotool", "click", "--clearmodifiers", "4") },
 	{ C|A,		XK_Delete,	spawn,			CMD("mpv", "--fs", "/usr/local/etc/rickroll.mp4") },
-	{ W|S,		XK_s,		spawn,			CMD("sxiv", "/home/johanmi/Pictures/schema.png") },
+	{ W|S,		XK_s,		spawn,			CMD("iv", "/home/johanmi/Pictures/schema.png") },
 	{ W|C,      XK_space,   spawn,          CMD("dunstctl", "close") },
 	{ W,		XK_b,		togglebar,		{0} },
 	{ W|C,		XK_j,		rotatestack,	{.i = +1 } },
