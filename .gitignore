@@ -1,2 +1,2 @@
-dwm
-*.o
+/.zig-cache
+/zig-out

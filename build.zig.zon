@@ -1,0 +1,11 @@
+.{
+    .name = "dwm",
+    .version = "6.3.0",
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "LICENSE",
+        "README.md",
+    },
+}
